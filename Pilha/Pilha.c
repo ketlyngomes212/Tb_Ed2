@@ -30,7 +30,6 @@
 
         SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 
-        // MUITO IMPORTANTE
         system("chcp 437 > nul");
     }
 #else
@@ -151,12 +150,50 @@ void exibe_Labirinto(int rato_i, int rato_j) {
     gotoxy(0, tam + offset_y + 3);
 }
 
+void resolve_Labirinto(){
+    int i = 2; // Linha inicial do rato
+    int j = 2; // Coluna inicial do rato
+
+    while(!(i == tam-2 && j == tam-1)) { // Enquanto o rato não chegar na saída
+        lab[i][j] = visitada; // Marca a posição atual como visitada
+        exibe_Labirinto(i, j); // Exibe o labirinto
+        Sleep(30);
+
+        if(lab[i-1][j] == livre) { // verifica se a posição acima do rato é livre
+            push(i * 100 + j); // salva a posicao atual na pilha
+            i--; // move pra cima
+        } else if(lab[i][j+1] == livre) { // verifica se a posição da direita do rato é livre
+            push(i * 100 + j);
+            j++; // move pra direita
+        } else if(lab[i+1][j] == livre) { // verifica se a posição abaixo do rato é livre
+            push(i * 100 + j);
+            i++; // move pra baixo
+        } else if(lab[i][j-1] == livre) { // verifica se a posição da esquerda do rato é livre
+            push(i * 100 + j);
+            j--; // move pra esquerda
+        } else { // não tem saida
+            lab[i][j] = beco; //marca como beco
+            if(PilhaVazia()) { // se a pilha estiver vazia
+                gotoxy(0,tam+6); // move o cursor para a linha abaixo do labirinto
+                printf("Labirinto sem saida!");
+                return;
+            }
+
+            int val = pop(); // volta para a última posição salva
+            i = val / 100; // recupera a linha
+            j = val % 100; // recupera a coluna
+        }
+    }
+    exibe_Labirinto(i, j); // Exibe o labirinto com o rato na saída
+    gotoxy(0, tam + 6); // move o cursor para a linha abaixo
+    printf("\nRato encontrou a saida!\n");
+}
+
 int main() {
     configura_terminal();
     limpa_tela();
     inicializa_Labirinto();
-    exibe_Labirinto(2, 2);
-    gotoxy(0, tam + 5);
+    resolve_Labirinto();
     return 0;
 }
 
