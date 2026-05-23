@@ -30,6 +30,7 @@
 
         SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 
+        // MUITO IMPORTANTE
         system("chcp 437 > nul");
     }
 #else
@@ -157,7 +158,7 @@ void resolve_Labirinto(){
     while(!(i == tam-2 && j == tam-1)) { // Enquanto o rato não chegar na saída
         lab[i][j] = visitada; // Marca a posição atual como visitada
         exibe_Labirinto(i, j); // Exibe o labirinto
-        Sleep(30);
+        Sleep(100);
 
         if(lab[i-1][j] == livre) { // verifica se a posição acima do rato é livre
             push(i * 100 + j); // salva a posicao atual na pilha

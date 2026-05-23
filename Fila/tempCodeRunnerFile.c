@@ -1,21 +1,16 @@
-Aviao remover_Fila(Fila *f){
-    Aviao av;
-    NODOF aux;
-
-    if(f->inicio == NULL){ // Se a fila estiver vazia
-        printf("\nFila Vazia!\n");
-        return;
+    // FASE 3: voa reto para esquerda
+    gotoxy(1, 22); printf("                                                                ");
+    gotoxy(1, 22); printf("Voando de %s para %s...", av.origem, av.destino);
+    while (x > 0) {
+        gotoxy(px, py); printf("      ");
+        gotoxy(x,   3); printf("{=|}<<");
+        espera(80);
+        px = x; py = 3; x -= 2;
     }
 
-    aux = f->inicio; // Auxiliar recebe o início da fila
-    av = aux->aviao; // Av recebe os dados do avião que será removido
-    f->inicio = f->inicio->prox; // O início da fila recebe o próximo do início
+    // limpa antes de resetar
+    gotoxy(px, 3); printf("      ");  // ← apaga último avião da fase 3
 
-    if(f->inicio == NULL)  // Se a fila ficar vazia após a remoção, o fim também deve ser NULL
-        f->fim = NULL;
-
-    free(aux); // Libera o nó removido  
-    f->tamanho--; // Decrementa o tamanho da fila
-    return av; // Retorna os dados do avião removido
-    
-}
+    // FASE 4: desce para esquerda
+    x = 58; y = 3; px = x; py = y;
+    while (y < 19) {
