@@ -158,31 +158,30 @@ void resolve_Labirinto(){
     while(!(i == tam-2 && j == tam-1)) { // Enquanto o rato não chegar na saída
         lab[i][j] = visitada; // Marca a posição atual como visitada
         exibe_Labirinto(i, j); // Exibe o labirinto
-        Sleep(100);
+        Sleep(10);
 
-        if(lab[i-1][j] == livre) { // verifica se a posição acima do rato é livre
-            push(i * 100 + j); // salva a posicao atual na pilha
-            i--; // move pra cima
-        } else if(lab[i][j+1] == livre) { // verifica se a posição da direita do rato é livre
+        if(lab[i][j-1] == livre) {        // esquerda
             push(i * 100 + j);
-            j++; // move pra direita
-        } else if(lab[i+1][j] == livre) { // verifica se a posição abaixo do rato é livre
+            j--;
+        } else if(lab[i+1][j] == livre) { // baixo
             push(i * 100 + j);
-            i++; // move pra baixo
-        } else if(lab[i][j-1] == livre) { // verifica se a posição da esquerda do rato é livre
+            i++;
+        } else if(lab[i][j+1] == livre) { // direita
             push(i * 100 + j);
-            j--; // move pra esquerda
-        } else { // não tem saida
-            lab[i][j] = beco; //marca como beco
-            if(PilhaVazia()) { // se a pilha estiver vazia
-                gotoxy(0,tam+6); // move o cursor para a linha abaixo do labirinto
+            j++;
+        } else if(lab[i-1][j] == livre) { // cima
+            push(i * 100 + j);
+            i--;
+        } else {
+            lab[i][j] = beco;
+            if(PilhaVazia()) {
+                gotoxy(0,tam+6);
                 printf("Labirinto sem saida!");
                 return;
             }
-
-            int val = pop(); // volta para a última posição salva
-            i = val / 100; // recupera a linha
-            j = val % 100; // recupera a coluna
+            int val = pop();
+            i = val / 100;
+            j = val % 100;
         }
     }
     exibe_Labirinto(i, j); // Exibe o labirinto com o rato na saída
