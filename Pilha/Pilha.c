@@ -1,16 +1,16 @@
 // bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h> 
-#include <conio.h>  // gotoxy()
+#include <time.h>
 
-#define tam 30 // Tamanho da matriz 
+// remove o #include <conio.h> daqui!
+
+#define tam 30
 #define livre 0          
 #define parede 1        
 #define visitada 2      
 #define beco 3   
 
-// NÃO É PRA MEXER AQUIIIII
 #ifdef _WIN32
     #include <windows.h>
 
@@ -22,22 +22,27 @@
     }
 
     void configura_terminal() {
-
         HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-
         DWORD dwMode = 0;
         GetConsoleMode(hOut, &dwMode);
-
         SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-
-        // MUITO IMPORTANTE
         system("chcp 437 > nul");
     }
+
+    void espera(int ms) { Sleep(ms); }
+
 #else
+    #include <unistd.h>
+    #include <termios.h>  // ← aqui no else, só para Mac!
+
     void gotoxy(int x, int y) {
         printf("\033[%d;%dH", y, x);
     }
+
     void configura_terminal() {}
+
+    void espera(int ms) { usleep(ms * 1000); }
+
 #endif
 
 
