@@ -11,37 +11,40 @@
 #define visitada 2      
 #define beco 3   
 
+
+//CONFIGURACAO DE TERMINAL PARA WINDOWS E MAC
+// NÃO MEXER
 #ifdef _WIN32
     #include <windows.h>
 
     void gotoxy(int x, int y) {
-        COORD coord;
-        coord.X = x;
-        coord.Y = y;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+        COORD coord; // Estrutura para coordenadas do console
+        coord.X = x; // Define a coordenada X
+        coord.Y = y; // Define a coordenada Y
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // Move o cursor para a posição (x, y)
     }
 
-    void configura_terminal() {
-        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-        DWORD dwMode = 0;
-        GetConsoleMode(hOut, &dwMode);
-        SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-        system("chcp 437 > nul");
+    void configura_terminal() { 
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); // Obtém o handle do console
+        DWORD dwMode = 0; // Variável para armazenar o modo atual do console
+        GetConsoleMode(hOut, &dwMode); // Obtém o modo atual do console
+        SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING); // Habilita o processamento de sequências de escape ANSI
+        system("chcp 437 > nul"); // Define a página de código para 437 (US) para garantir que os caracteres gráficos sejam exibidos corretamente
     }
 
     void espera(int ms) { Sleep(ms); }
 
 #else
-    #include <unistd.h>
-    #include <termios.h>  // ← aqui no else, só para Mac!
+    #include <unistd.h> // Para a função usleep
+    #include <termios.h>  // Para configurar o terminal
 
-    void gotoxy(int x, int y) {
-        printf("\033[%d;%dH", y, x);
+    void gotoxy(int x, int y) { // Move o cursor para a posição (x, y) usando sequências de escape ANSI
+        printf("\033[%d;%dH", y, x); // Sequência de escape ANSI para mover o cursor
     }
 
     void configura_terminal() {}
 
-    void espera(int ms) { usleep(ms * 1000); }
+    void espera(int ms) { usleep(ms * 100); } //
 
 #endif
 
@@ -163,7 +166,7 @@ void resolve_Labirinto(){
     while(!(i == tam-2 && j == tam-1)) { // Enquanto o rato não chegar na saída
         lab[i][j] = visitada; // Marca a posição atual como visitada
         exibe_Labirinto(i, j); // Exibe o labirinto
-        Sleep(10);
+        espera(10);
 
         if(lab[i][j-1] == livre) {        // esquerda
             push(i * 100 + j);
