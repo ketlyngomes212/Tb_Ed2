@@ -29,7 +29,7 @@
         DWORD dwMode = 0; // Variável para armazenar o modo atual do console
         GetConsoleMode(hOut, &dwMode); // Obtém o modo atual do console
         SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING); // Habilita o processamento de sequências de escape ANSI
-        system("chcp 437 > nul"); // Define a página de código para 437 (US) para garantir que os caracteres gráficos sejam exibidos corretamente
+        system("chcp 65001 > nul"); // Define a página de código para 437 (US) para garantir que os caracteres gráficos sejam exibidos corretamente
     }
 
     void espera(int ms) { Sleep(ms); }
@@ -140,19 +140,19 @@ void exibe_Labirinto(int rato_i, int rato_j) {
         for (int j = 0; j < tam; j++) {
 
             if (i == rato_i && j == rato_j)
-                printf(" @");
+                printf("🐭");
 
             else if (lab[i][j] == livre)
                 printf("  ");
 
             else if (lab[i][j] == parede)
-                printf("%c%c", 219, 219);
+                printf("██");
 
             else if (lab[i][j] == visitada)
                 printf("..");
 
             else if (lab[i][j] == beco)
-                printf("%c%c", 178, 178);
+                printf("▒▒");
         }
     }
 

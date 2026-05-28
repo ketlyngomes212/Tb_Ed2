@@ -15,7 +15,7 @@
         DWORD dwMode = 0;
         GetConsoleMode(hOut, &dwMode);
         SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-        system("chcp 437 > nul");
+        system("chcp 65001 > nul");
     }
     void espera(int ms) { Sleep(ms); }
 #else
@@ -304,11 +304,37 @@ int main(){
 }
 
 //// ANIMAÇÃO DA TELA
+void desenha_Ceu() {
 
+    // nuvens
+    gotoxy(10,3);
+    printf("☁ ☁ ☁");
+
+    gotoxy(35,5);
+    printf("☁☁");
+
+    gotoxy(60,2);
+    printf("☁ ☁");
+
+    gotoxy(50,8);
+    printf("☁");
+
+    // estrelas
+    gotoxy(5,2);
+    printf("*");
+
+    gotoxy(25,4);
+    printf("*");
+
+    gotoxy(70,6);
+    printf("*");
+
+}
 void anima_Decolagem(Aviao av) {
     int x, y, px, py; 
 
     limpa_tela();
+    desenha_Ceu();
 
     gotoxy(1, 20); // Imprime a pista
     printf("================================================================");
@@ -323,7 +349,7 @@ void anima_Decolagem(Aviao av) {
         gotoxy(px, py); 
         printf("      "); // Apaga o avião na posição anterior
         gotoxy(x,  y);  
-        printf("AVIAO"); // Imprime o avião na nova posição
+        printf("🛫"); // Imprime o avião na nova posição
         espera(100); // Espera um pouco para criar a animação
         px = x; // Atualiza a posição anterior para a atual 
         py = y; // Atualiza a posição anterior para a atual
@@ -334,7 +360,7 @@ void anima_Decolagem(Aviao av) {
         gotoxy(px, py); 
         printf("      "); // Apaga o avião na posição anterior
         gotoxy(x,  y);  
-        printf("AVIAO"); // Imprime o avião na nova posição
+        printf("🛫"); // Imprime o avião na nova posição
         espera(120); 
         px = x; // Atualiza a posição anterior para a atual 
         py = y; // Atualiza a posição anterior para a atual
@@ -353,6 +379,7 @@ void anima_Pouso(Aviao av) {
     int x, y, px, py;
 
     limpa_tela();
+    desenha_Ceu();
 
     gotoxy(1, 20); // Imprime a pista
     printf("================================================================================");
@@ -370,7 +397,7 @@ void anima_Pouso(Aviao av) {
         gotoxy(px, py); 
         printf("      "); // Apaga o avião na posição anterior
         gotoxy(x,  y);  
-        printf("AVIAO"); // Imprime o avião na nova posição
+        printf("🛩"); // Imprime o avião na nova posição
         espera(120);
         px = x; py = y; x -= 2; y++;
     }
@@ -385,7 +412,7 @@ void anima_Pouso(Aviao av) {
         gotoxy(px, py); 
         printf("      "); // Apaga o avião na posição anterior
         gotoxy(x,  y);  
-        printf("AVIAO"); // Imprime o avião na nova posição
+        printf("🛩"); // Imprime o avião na nova posição
         espera(100);
         px = x; // Atualiza a posição anterior para a atual
         py = y; 
