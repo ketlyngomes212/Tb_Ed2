@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-// remove o #include <conio.h> daqui!
-
 #define tam 30
 #define livre 0          
 #define parede 1        
@@ -12,8 +10,7 @@
 #define beco 3   
 
 
-//CONFIGURACAO DE TERMINAL PARA WINDOWS E MAC
-// NÃO MEXER
+//COMPILAÇÃO PRA FUNCIONAR NO WINDOWS
 #ifdef _WIN32
     #include <windows.h>
 
@@ -33,28 +30,11 @@
     }
 
     void espera(int ms) { Sleep(ms); }
-
-#else
-    #include <unistd.h> // Para a função usleep
-    #include <termios.h>  // Para configurar o terminal
-
-    void gotoxy(int x, int y) { // Move o cursor para a posição (x, y) usando sequências de escape ANSI
-        printf("\033[%d;%dH", y, x); // Sequência de escape ANSI para mover o cursor
-    }
-
-    void configura_terminal() {}
-
-    void espera(int ms) { usleep(ms * 100); } //
-
 #endif
 
 
 void limpa_tela() {
-    #ifdef _WIN32
         system("cls");
-    #else
-        system("clear");
-    #endif
 }
 
 // Estrutura Pilha

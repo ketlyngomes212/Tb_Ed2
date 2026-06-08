@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//COMPILAÇÃO DE CÓDIGO DIFERENTES -- NÃO MEXER
+//COMPILAÇÃO PRA FUNCIONAR NO WINDOWS
 #ifdef _WIN32
     #include <windows.h>
     void gotoxy(int x, int y) {
@@ -18,19 +18,10 @@
         system("chcp 65001 > nul");
     }
     void espera(int ms) { Sleep(ms); }
-#else
-    #include <unistd.h>
-    void gotoxy(int x, int y) { printf("\033[%d;%dH", y, x); }
-    void configura_terminal() {}
-    void espera(int ms) { usleep(ms * 1000); }
 #endif
 
 void limpa_tela() {
-    #ifdef _WIN32
         system("cls");
-    #else
-        system("clear");
-    #endif
 }
 
 // Tipo avião
