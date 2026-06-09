@@ -95,13 +95,13 @@ void inserir_Fila(Fila *f){
     contador_avioes++; // Incrementa o contador para o próximo avião
 
     printf("Nome do aviao: ");
-    scanf("%s", novo->aviao.nome);
+    scanf(" %[^\n]", novo->aviao.nome);
     
     printf("Origem: ");
-    scanf("%s", novo->aviao.origem);
+    scanf(" %[^\n]", novo->aviao.origem);
     
     printf("Destino: ");
-    scanf("%s", novo->aviao.destino);
+    scanf(" %[^\n]", novo->aviao.destino);
     
     printf("Numero passageiros: ");
     scanf("%d", &novo->aviao.passageiros);
