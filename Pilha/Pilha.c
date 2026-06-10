@@ -108,14 +108,14 @@ void inicializa_Labirinto() {
     lab[tam-2][tam-1] = livre; // saída
 }
 
-void exibe_Labirinto(int rato_i, int rato_j) {
+void exibe_Labirinto(int rato_i, int rato_j) { 
 
-    int offset_y = 2;
-    int offset_x = 1;
+    int offset_y = 2; // deslocamento vertical para exibir o labirinto mais abaixo na tela
+    int offset_x = 1; //
 
-    for (int i = 0; i < tam; i++) {
+    for (int i = 0; i < tam; i++) { 
 
-        gotoxy(offset_x, i + offset_y);
+        gotoxy(offset_x, i + offset_y); // move o cursor para a posição correta antes de imprimir cada linha do labirinto
 
         for (int j = 0; j < tam; j++) {
 
@@ -149,7 +149,7 @@ void resolve_Labirinto(){
         espera(10);
 
         if(lab[i][j-1] == livre) {        // esquerda
-            push(i * 100 + j);
+            push(i * 100 + j); // Armazena a posição atual na pilha antes de se mover para a próxima posição
             j--;
         } else if(lab[i+1][j] == livre) { // baixo
             push(i * 100 + j);
@@ -163,13 +163,13 @@ void resolve_Labirinto(){
         } else {
             lab[i][j] = beco;
             if(PilhaVazia()) {
-                gotoxy(0,tam+6);
+                gotoxy(0,tam+6); // move o cursor para a linha abaixo
                 printf("Labirinto sem saida!");
                 return;
             }
-            int val = pop();
-            i = val / 100;
-            j = val % 100;
+            int val = pop(); // volta para a última posição válida
+            i = val / 100; // Calcula a linha a partir do valor armazenado na pilha
+            j = val % 100; // Calcula a coluna a partir do valor armazenado na pilha
         }
     }
     exibe_Labirinto(i, j); // Exibe o labirinto com o rato na saída
