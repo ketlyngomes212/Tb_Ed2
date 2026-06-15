@@ -1,3 +1,6 @@
+// Daniela Cristina Amorim de Souza GRR20255559
+// Ketlyn Gomes de Oliveira GRR20252054
+
 #include <stdio.h>
 #include <stdlib.h>
 
